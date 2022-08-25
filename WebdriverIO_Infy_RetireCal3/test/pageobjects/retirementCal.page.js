@@ -68,42 +68,29 @@ class RetirementPage extends Page {
         await this.inputRCurrentAge.setValue(currentAge);
         await this.inputRAgeToRetire.setValue(targetRetirmentAge);
         await this.inputRCurrentAnnualIncome.setValue('$9');
-        await new Promise(r => setTimeout(r, 4000)); //delete  
-        ///
         await browser.keys('\uE05A'); //"ArrowRight"
         await browser.keys('\uE05A');
         await browser.keys(['Meta', '\uE05A']);
         await browser.keys(['Meta', CONSTANT_RET.RETRIEMENT_PAGE_CINCOME]);
-       // await browser.keys(['Meta', '77']);
         await browser.keys('\uE004');  // Tab
-        await browser.keys('\uE004');
-        //browser.execute();
-        //await browser.keys('Enter');
-                //var data = browser.execute(function() {
-                // return window.data;
-                //});
-                // \uE058	"ArrowLeft" , \uE05A	"ArrowRight"
-        
+        await browser.keys('\uE004');       
         await this.inputRCurrentRetirementSavingBal.setValue(CONSTANT_RET.RETRIEMENT_PAGE_SAVING_BAL);               
         await this.inputRCurrentlyRetirementSavingEachYr.setValue(CONSTANT_RET.RETRIEMENT_PAGE_SAVING_EACH_YR);
         await this.inputREachYrIncrease.setValue(CONSTANT_RET.RETRIEMENT_PAGE_INCRESE_ECH_YR);       
         if(isSocialSecurityIncomeAdded){ 
             ElementUtil.myLogger('On Retirment Page : YES on Social Security income');
-            await new Promise(r => setTimeout(r, 3000));
+            await this.radioRSocialSecuritybenefitsYes.waitForExist(3000); 
             await this.radioRSocialSecuritybenefitsYes.click();
-            await new Promise(r => setTimeout(r, 3000));
+            await this.waitForExists(3);
             await this.inputSocialSecurityOverrideAmount.setValue(CONSTANT_RET.RETRIEMENT_PAGE_SS_OVERRIDE_AMOUNT);   
         }  
         await this.btnSubmitCalculate.saveScreenshot(CONSTANT_RET.COMMON_SCR_PATH);    //Screen shot 
         await this.btnSubmitCalculate.click();
-        await new Promise(r => setTimeout(r, 2000));
+        await this.waitForExists(2);
     }
-
     async fillDataAllFields(currentAge, targetRetirmentAge,isSocialSecurityIncomeAdded) {
-        ElementUtil.myLogger('On Retirment Page : with  All Fields');
-        //await new Promise(r => setTimeout(r, 2000));     
+        ElementUtil.myLogger('On Retirment Page : with  All Fields');    
         await this.inputSpouseAnnualIncome.setValue(CONSTANT_RET.RETRIEMENT_PAGE_SP_INCOME);  
-        //await new Promise(r => setTimeout(r, 4000)); 
         await this.fillDataOnlyRequired(currentAge, targetRetirmentAge,isSocialSecurityIncomeAdded )  
     }
 
@@ -114,8 +101,8 @@ class RetirementPage extends Page {
         return super.openRetiremntApplication(CONSTANT_RET.RETRIEMENT_PAGE_PATH_URI);
     }
 
-    myPromise (sec){
-        new Promise(r => setTimeout(r, 1000 * sec));
+    async waitForExists (sec){
+        await new Promise(r => setTimeout(r, 1000 * sec));
     }
 }
 

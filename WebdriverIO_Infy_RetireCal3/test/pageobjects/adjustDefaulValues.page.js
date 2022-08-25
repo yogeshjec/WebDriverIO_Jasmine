@@ -34,13 +34,18 @@ class AdjustDefaultValuesPage extends Page {
         ElementUtil.myLogger('On Adjust Default Values Page :');  
         await this.inputYearsDependentOn.setValue(CONSTANT_ADJUSTD.ADJUST_DEFAULT_PAGE_YR_DEP);    
         await this.btnSavePersonalizedValues.click();
-        await new Promise(r => setTimeout(r, 2000));
+        await this.waitForExists(3); 
     }
 
     async doClickPageLink ( ) {
         ElementUtil.myLogger('On Adjust Default Values Page :');  
         await this.linkAdjustDefaultValues.click();
-        await new Promise(r => setTimeout(r, 4000));
+        await this.waitForExists(3); 
+        //await new Promise(r => setTimeout(r, 4000));
+    }
+
+    async waitForExists (sec){
+        await new Promise(r => setTimeout(r, 1000 * sec));
     }
 }
 module.exports = new AdjustDefaultValuesPage();
